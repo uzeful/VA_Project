@@ -1,0 +1,5 @@
+load PCA params from pretrained/pca_params.pkl
+current folder: /data/datasets/yt8m/TS040 HYBRID - FEEL THE POWER--1VnJGJ6c2U
+current folder: /data/datasets/yt8m/out
+current folder: /data/datasets/yt8m/movie
+current folder: /data/datasets/yt8m/output_file

@@ -1,0 +1,8 @@
+torch
+torchvision
+tensorflow
+numpy
+pafy
+youtube-dl
+sk-video
+scikit-learn
