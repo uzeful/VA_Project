@@ -16,7 +16,9 @@ This project is set up to assist you to finish your final project of the class "
 
 [vfeat_extractor/infer_folder_vfeat.py](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor/infer_folder_vfeat.py) is used to extract the visual features of the videos *in your defined folder*.
 
-Note: before using them to extract features, you should install the required dependencies, such as pytorch and tensorflow. The detailed requirements can be found in the subfolders.
+Before using them to extract features, you should firstly download the [pretrained vggish models](http://pan.baidu.com/s/1nuVq3PZ) and [pretrained inception models](http://pan.baidu.com/s/1dEV6J41), and then respectively put them under the folder "afeat_extractor" and folder "vfeat_extractor". 
+
+Moreover, you should also install the required dependencies, such as pytorch and tensorflow. The detailed requirements can be found in the subfolders "afeat_extractor" and "vfeat_extractor".
 
 ## Demo
 
