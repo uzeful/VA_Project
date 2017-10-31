@@ -1,6 +1,6 @@
 ## Aim of This Project
 
-This project is set up to assist you to finish your final project of the class "Introduction to Auditory-visual Information System".
+This project is set up to assist you to finish your final project of the class "Introduction to Visual-Auditory Information System".
 
 ## Introduction
 
@@ -16,9 +16,11 @@ This project is set up to assist you to finish your final project of the class "
 
 [vfeat_extractor/infer_folder_vfeat.py](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor/infer_folder_vfeat.py) is used to extract the visual features of the videos *in your defined folder*.
 
+Note: before using them to extract features, you should install the required dependencies, such as pytorch and tensorflow. The detailed requirements can be found in the subfolders.
+
 ## Demo
 
-[proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. Note: the provided demo was implemented in pytorch.
+[proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. *Note: the provided demo was implemented in pytorch.*
 
 [proj_demo/model2.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/model2.py) contains our simply designed model.
 
