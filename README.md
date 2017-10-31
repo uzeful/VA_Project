@@ -1,8 +1,8 @@
-# Aim of This Project
+## Aim of This Project
 
 This project is set up to assist you to finish your final project of the class "Introduction to Auditory-visual Information System".
 
-# Introduction
+## Introduction
 
 [afeat_extractor](https://github.com/uzeful/VA_Project/tree/master/afeat_extractor) and [vfeat_extractor](https://github.com/uzeful/VA_Project/tree/master/vfeat_extractor) are respectively used to extract the visual and auditory features of the video. Specifically, in our project, we extract the 128d auditory feature and 1024d visual feature every second, and we totally extract 120 seconds of features. Therefore, every video corresponds to 120×128 auditory feature and 120×1024 visual feature. 
 
@@ -10,13 +10,13 @@ This project is set up to assist you to finish your final project of the class "
 
 * The visual feature is extracted by the inception v3 model (implemented in pytorch).
 
-# Usage
+## Usage
 
 [afeat_extractor/infer_folder_afeat.py](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor/infer_folder_afeat.py) is used to extract the auditory features of the videos *in your defined folder*.
 
 [vfeat_extractor/infer_folder_vfeat.py](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor/infer_folder_vfeat.py) is used to extract the visual features of the videos *in your defined folder*.
 
-# Demo
+## Demo
 
 [proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. Note: the provided demo was implemented in pytorch.
 
@@ -27,6 +27,6 @@ This project is set up to assist you to finish your final project of the class "
 [proj_demo/evaluate.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/evaluate.py) contains testing code.
 
 
-#Q&A
+## Q&A
 
 If you have any question, just add a new issue!
