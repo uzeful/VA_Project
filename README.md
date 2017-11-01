@@ -20,6 +20,21 @@ Before using them to extract features, you should firstly download the [pretrain
 
 Moreover, you should also install the required dependencies, such as pytorch and tensorflow. The detailed requirements can be found in the subfolders "afeat_extractor" and "vfeat_extractor".
 
+## Dataset
+
+The provided training dataset includes 1300 video folders, each of which contains five parts:
+
+* frames: containing 125 video frames, where are sampled at the rate 1 frame per second    
+* \*.mp4: the video file without audio    
+* \*.wav: the audio file    
+* afeat.npy: the numpy compressed auditory feature (120\*128)    
+* vfeat.npy: the numpy compressed visual feature (120\*1024)    
+
+The following pic shows one example
+<p align="center">
+<img src="https://github.com/uzeful/VA_Project/blob/master/dataset_sample.png" width="250">
+</p>
+
 ## Demo
 
 [proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. *Note: the provided demo was implemented in pytorch.*
