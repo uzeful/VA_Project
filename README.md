@@ -53,4 +53,4 @@ The following pic shows one example
 
 ## Q&A
 
-If you have any question, just contact us (Zhang Yu: uzeful@163.com, Wei Te: kevin.1991@163.com) or add a new issue under this repo!
+If you have any question, just contact us through e-mails or add a new issue under this repo!
