@@ -35,6 +35,8 @@ The following pic shows one example
 <img src="https://github.com/uzeful/VA_Project/blob/master/dataset_sample.png" width="750">
 </p>
 
+The total dataset containing all the five parts takes about 60GB memory, and can be downloaded through the campus network. If you only use the extracted auditory feature and visual feature, then you can download the feature-only-dataset (about 150MB) from [Baidu Yun](http://pan.baidu.com/s/1qY2uyhI).
+
 ## Demo
 
 [proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. *Note: the provided demo was implemented in pytorch.*
