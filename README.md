@@ -4,7 +4,7 @@ This project is set up to assist you to finish your final project of the class "
 
 ## Introduction
 
-[afeat_extractor](https://github.com/uzeful/VA_Project/tree/master/afeat_extractor) and [vfeat_extractor](https://github.com/uzeful/VA_Project/tree/master/vfeat_extractor) are respectively used to extract the visual and auditory features of the video. Specifically, in our project, we extract the 128d auditory feature and 1024d visual feature every second, and we totally extract 120 seconds of features. Therefore, every video corresponds to 120×128 auditory feature and 120×1024 visual feature. 
+[afeat_extractor](https://github.com/uzeful/VA_Project/tree/master/afeat_extractor) and [vfeat_extractor](https://github.com/uzeful/VA_Project/tree/master/vfeat_extractor) are respectively used to extract the visual and auditory features of the video. Specifically, in our project, we extract the 128d auditory feature and 1024d visual feature every second, and we totally extract 120 seconds of features. Therefore, every video corresponds to 120×128 auditory feature and 120×1024 visual feature, which are respectively saved as the numpy compressed format (\*.npy).
 
 * The audio feature is extracted by a Vgg-like CNN model (implemented in tensorflow).
 
@@ -16,7 +16,7 @@ This project is set up to assist you to finish your final project of the class "
 
 * [vfeat_extractor/infer_folder_vfeat.py](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor/infer_folder_vfeat.py) is used to extract the visual features of the videos *in your defined folder*.
 
-Before using them to extract features, you should firstly download the [pretrained vggish models](http://pan.baidu.com/s/1nuVq3PZ) and [pretrained inception models](http://pan.baidu.com/s/1dEV6J41), and then respectively put them under the folder "afeat_extractor" and folder "vfeat_extractor". 
+Before using them to extract features, you should firstly download the [pretrained vggish models](http://pan.baidu.com/s/1nuVq3PZ) and [pretrained inception models](http://pan.baidu.com/s/1dEV6J41), and then respectively put them under the folder "afeat_extractor/" and folder "vfeat_extractor/pretrained/". 
 
 Moreover, you should also install the required dependencies, such as pytorch and tensorflow. The detailed requirements can be found in the subfolders "afeat_extractor" and "vfeat_extractor".
 
@@ -30,6 +30,11 @@ Moreover, you should also install the required dependencies, such as pytorch and
 
 [proj_demo/evaluate.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/evaluate.py) contains testing code.
 
+## Acknowlegdements
+
+* The original implementation of the visual feature extractor could be found from [this link](https://github.com/corenel/yt8m-feature-extractor).
+
+* The original implementation of the auditory feature extractor could be found from [this link](https://github.com/tensorflow/models/tree/master/research/audioset).
 
 ## Q&A
 
