@@ -1,6 +1,6 @@
 ## Target of This Repo
 
-&#8194 This repo is set up to assist you to finish your final project of the class "Introduction to Visual-Auditory Information System". This repo mainly consists of three parts: the auditory feature extractor ( [afeat_extractor](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor)), visual feature extractor ([vfeat_extractor](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor)) and also a simple project demo ([proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo)) which is used to predict the similarity of the audio and silent video. 
+    This repo is set up to assist you to finish your final project of the class "Introduction to Visual-Auditory Information System". This repo mainly consists of three parts: the auditory feature extractor ( [afeat_extractor](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor)), visual feature extractor ([vfeat_extractor](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor)) and also a simple project demo ([proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo)) which is used to predict the similarity of the audio and silent video. 
 
 ****
 
