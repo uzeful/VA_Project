@@ -15,7 +15,6 @@ import torch.optim as optim
 import torch.utils.data
 
 from torch.autograd import Variable
-from torchvision.transforms import ToTensor
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import model2 as models
@@ -192,14 +191,6 @@ def main():
     # adjust learning rate every lr_decay_epoch
     lambda_lr = lambda epoch: opt.lr_decay ** ((epoch + 1) // opt.lr_decay_epoch)   #poly policy
     scheduler = LR_Policy(optimizer, lambda_lr)
-
-    if opt.optim_state_from != '':
-        mylog.info('loading optim_state_from {0}'.format(opt.optim_state_from))
-        optim_state = torch.load(opt.optim_state_from)
-        resume_epoch = optim_state['epoch']
-        #best_prec1 = optim_state['best_prec1']
-        # configure optimzer
-        optimizer.load_state_dict(optim_state['optim_state_best'])
 
     for epoch in range(resume_epoch, opt.max_epochs):
     	#################################

@@ -15,14 +15,12 @@ import torch.optim as optim
 import torch.utils.data
 
 from torch.autograd import Variable
-from torchvision.transforms import ToTensor
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import model2 as models
 from dataset2 import VideoFeatDataset as dset
 import utils
 
-from visdom_tools import VisdomPlotter as Dashboard
 from glog_tools import get_logger
 from config_tools import Config
 from optparse import OptionParser
