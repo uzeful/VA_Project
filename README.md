@@ -32,7 +32,7 @@ The provided training dataset includes 1300 video folders, each of which contain
 
 The following pic shows one example
 <p align="center">
-<img src="https://github.com/uzeful/VA_Project/blob/master/dataset_sample.png" width="250">
+<img src="https://github.com/uzeful/VA_Project/blob/master/dataset_sample.png" width="750">
 </p>
 
 ## Demo
