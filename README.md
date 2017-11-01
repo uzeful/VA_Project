@@ -14,7 +14,7 @@ This repo is set up to assist you to finish your final project of the class "Int
 
 * The visual feature is extracted by the inception v3 model (implemented in pytorch).
 
-1 ### How to use the feature extractors
+1. ### How to use the feature extractors
 
 * [afeat_extractor/infer_folder_afeat.py](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor/infer_folder_afeat.py) is used to extract the auditory features of the videos *in your defined folder*.
 
