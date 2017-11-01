@@ -38,4 +38,4 @@ Moreover, you should also install the required dependencies, such as pytorch and
 
 ## Q&A
 
-If you have any question, just add a new issue!
+If you have any question, just contact us (Zhang Yu: uzeful@163.com, Wei Te: kevin.1991@163.com) or add a new issue under this repo!
