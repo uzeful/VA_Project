@@ -1,12 +1,12 @@
-+## Target of This Repo
++ ## Target of This Repo
 
 This repo is set up to assist you to finish your final project of the class "Introduction to Visual-Auditory Information System". This repo mainly consists of three parts: the auditory feature extractor ( [afeat_extractor](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor)), visual feature extractor ([vfeat_extractor](https://github.com/uzeful/VA_Project/blob/master/vfeat_extractor)) and also a simple project demo ([proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo)) which is used to predict the similarity of the audio and silent video. 
 
 ****
 
-+## Code Description
++ ## Code Description
 
--### Feature Extractors
+- ### Feature Extractors
 
 [afeat_extractor](https://github.com/uzeful/VA_Project/tree/master/afeat_extractor) and [vfeat_extractor](https://github.com/uzeful/VA_Project/tree/master/vfeat_extractor) are respectively used to extract the visual and auditory features of the video. Specifically, in our project, we extract the 128d auditory feature and 1024d visual feature every second, and we totally extract 120 seconds of features. Therefore, every video corresponds to 120×128 auditory feature and 120×1024 visual feature, which are respectively saved as the numpy compressed file (\*.npy).
 
@@ -14,7 +14,7 @@ This repo is set up to assist you to finish your final project of the class "Int
 
 * The visual feature is extracted by the inception v3 model (implemented in pytorch).
 
-### How to use the feature extractors
+1 ### How to use the feature extractors
 
 * [afeat_extractor/infer_folder_afeat.py](https://github.com/uzeful/VA_Project/blob/master/afeat_extractor/infer_folder_afeat.py) is used to extract the auditory features of the videos *in your defined folder*.
 
