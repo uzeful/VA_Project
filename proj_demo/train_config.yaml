@@ -2,8 +2,8 @@ train: True
 cuda: True
 ngpu: 1
 gpu_id: '0'
-data_dir: /data/datasets/yt8m
-flist: './test.txt'
+data_dir: /data/datasets/yt8m/Train
+flist: './train_filelist.txt'
 workers: 4
 batchSize: 64
 manualSeed: False
@@ -20,7 +20,7 @@ checkpoint_folder: ./checkpoints
 prefix: 'VA_METRIC'
 model: ''
 gradient_clip: 0.01
-init_model: './checkpoints/VA_METRIC_state_epoch200.pth'
+init_model: ''
 optim_model_from: ''
 optim_state_from: ''
 port: 8097
