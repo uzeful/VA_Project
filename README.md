@@ -43,7 +43,8 @@ The provided training dataset includes 1300 video folders, each of which contain
 * \*.wav: the 125 seconds of audio file    
 * afeat.npy: the numpy compressed auditory feature (120\*128)    
 * vfeat.npy: the numpy compressed visual feature (120\*1024)    
-*Note: we extract 125 seconds of video and audio file just to ensure that we can obtain 120 seconds of features.*
+
+<font color=#0099ff size=10>Note: we extract 125 seconds of video and audio file just to ensure that we can obtain 120 seconds of features.</font>    
 
 The following pic shows one example
 <p align="center">
