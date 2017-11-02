@@ -3,7 +3,7 @@ cuda: True
 ngpu: 1
 gpu_id: '0'
 data_dir: /data/datasets/yt8m
-flist: './test.txt'
+flist: './test_filelist.txt'
 workers: 4
 batchSize: 40
 manualSeed: False
