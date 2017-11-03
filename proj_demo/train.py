@@ -13,24 +13,24 @@ import torch.nn.parallel # for multi-GPU training
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data
-
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
-import model2 as models
+import models
 from dataset import VideoFeatDataset as dset
-import utils
 
-from glog_tools import get_logger
-from config_tools import Config
+from tools.glog_tools import get_logger
+from tools.config_tools import Config
+from tools import utils
+
 from optparse import OptionParser
 import pdb
 
 parser = OptionParser()
 parser.add_option('--config',
                   type=str,
-                  help="net configuration",
-                  default="./train_config.yaml")
+                  help="training configuration",
+                  default="./configs/train_config.yaml")
 
 (opts, args) = parser.parse_args()
 assert isinstance(opts, object)
