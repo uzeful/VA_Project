@@ -18,7 +18,7 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import model2 as models
-from dataset2 import VideoFeatDataset as dset
+from dataset import VideoFeatDataset as dset
 import utils
 
 from glog_tools import get_logger
@@ -47,7 +47,7 @@ if opt.checkpoint_folder is None:
 if not os.path.exists(opt.checkpoint_folder):
     os.system('mkdir {0}'.format(opt.checkpoint_folder))
 
-train_dataset = dset(opt.data_dir, opt.flist='./train.txt')
+train_dataset = dset(opt.data_dir, flist=opt.flist)
 
 mylog.info('number of train samples is: {0}'.format(len(train_dataset)))
 mylog.info('finished loading data')

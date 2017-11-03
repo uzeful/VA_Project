@@ -2,8 +2,9 @@ train: False
 cuda: True
 ngpu: 1
 gpu_id: '0'
-data_dir: /data/datasets/yt8m
-flist: './test_filelist.txt'
+data_dir: /data/datasets/yt8m/Train     # Your dataset dir
+video_flist: './Video_Name_List.txt'
+audio_flist: './Audio_Name_List.txt'
 workers: 4
 batchSize: 40
 manualSeed: False

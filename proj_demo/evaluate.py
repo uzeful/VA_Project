@@ -18,7 +18,7 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import model2 as models
-from dataset2 import VideoFeatDataset as dset
+from dataset import VideoFeatDataset as dset
 import utils
 
 from glog_tools import get_logger
@@ -43,9 +43,10 @@ os.popen('cat {0} >> {1}'.format(opts.config, logfile))
 if opt.checkpoint_folder is None:
     opt.checkpoint_folder = 'checkpoints'
 
-test_dataset = dset(opt.data_dir, opt.flist)
+test_video_dataset = dset(opt.data_dir, opt.video_flist, which_feat='vfeat')
+test_audio_dataset = dset(opt.data_dir, opt.audio_flist, which_feat='afeat')
 
-mylog.info('number of test samples is: {0}'.format(len(test_dataset)))
+mylog.info('number of test samples is: {0}'.format(len(test_video_dataset)))
 mylog.info('finished loading data')
 
 os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
@@ -61,7 +62,7 @@ else:
 cudnn.benchmark = True
 
 # test function for metric learning
-def test(test_loader, model, opt):
+def test(video_loader, audio_loader, model, opt):
     """
     train for one epoch on the training set
     """
@@ -71,9 +72,8 @@ def test(test_loader, model, opt):
     end = time.time()
     sim_mat = []
     right = 0
-    for _, (vfeat, _) in enumerate(test_loader):
-        for _, (_, afeat) in enumerate(test_loader):
-            #pdb.set_trace()
+    for _, vfeat in enumerate(video_loader):
+        for _, afeat in enumerate(audio_loader):
             # shuffling the index orders
             bz = vfeat.size()[0]
             for k in np.arange(bz):
@@ -105,7 +105,9 @@ def test(test_loader, model, opt):
 def main():
     global opt
     # test data loader
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=opt.batchSize,
+    test_video_loader = torch.utils.data.DataLoader(test_video_dataset, batch_size=opt.batchSize,
+                                     shuffle=False, num_workers=int(opt.workers))
+    test_audio_loader = torch.utils.data.DataLoader(test_audio_dataset, batch_size=opt.batchSize,
                                      shuffle=False, num_workers=int(opt.workers))
 
     # create model
@@ -119,7 +121,7 @@ def main():
         mylog.info('shift model to GPU .. ')
         model = model.cuda()
 
-    test(test_loader, model, opt)
+    test(test_video_loader, test_audio_loader, model, opt)
 
 
 if __name__ == '__main__':
