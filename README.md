@@ -27,7 +27,7 @@ Moreover, you should also install the required dependencies, such as pytorch and
 
 [proj_demo](https://github.com/uzeful/VA_Project/tree/master/proj_demo) provides one simple example to learn the similarity metric between the 120×1024 visual feature and 120×128 auditory feature. *Note: the provided demo was implemented in pytorch.*
 
-* [proj_demo/model2.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/model2.py) contains our simply designed model.
+* [proj_demo/models.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/models.py) contains our simply designed model.
 
 * [proj_demo/train.py](https://github.com/uzeful/VA_Project/blob/master/proj_demo/train.py) contains training code.
 
