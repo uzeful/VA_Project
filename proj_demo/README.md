@@ -31,6 +31,6 @@ python evaluate.py
 ```
 
 ## Self-defined model
-'''
-modify model.py to configure your own model, and change the hyper-parameters in the config files(configs/train_config.yaml)
-'''
+```
+modify model.py to configure your own model, and change the hyper-parameters in the config files (configs/train_config.yaml)
+```
