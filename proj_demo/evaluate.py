@@ -98,8 +98,8 @@ def test(video_loader, audio_loader, model, opt):
                 order = topk[:,k]
                 if k in order:
                     right = right + 1
-            print(simmat)
-            print('accuracy (top{}): {:.3}'.format(opt.topk, right/bz))
+            mylog.info('The similarity matrix: \n {}'.format(simmat))
+            mylog.info('Testing accuracy (top{}): {:.3}'.format(opt.topk, right/bz))
 
 def main():
     global opt
