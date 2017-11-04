@@ -1,6 +1,6 @@
 train: False
 cuda: True
-ngpu: 1
+ngpu: 0
 gpu_id: '0'
 data_dir: /data/datasets/yt8m/Train     # Your dataset path
 video_flist: './filelists/Video_Name_List.txt'
