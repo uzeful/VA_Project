@@ -1,6 +1,6 @@
 train: True
 cuda: True
-ngpu: 1
+ngpu: 0
 gpu_id: '0'
 data_dir: /data/datasets/yt8m/Train         # replace it as your data path
 flist: './filelists/train_filelist.txt'
@@ -21,10 +21,3 @@ prefix: 'VA_METRIC'
 model: ''
 gradient_clip: 0.01
 init_model: ''
-optim_model_from: ''
-optim_state_from: ''
-port: 8097
-train_env: ''
-test_env: ''
-log_dir: logs/
-log_name: 'VA_METRIC'

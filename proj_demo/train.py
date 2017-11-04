@@ -6,6 +6,7 @@ import random
 import time
 import os
 import numpy as np
+from optparse import OptionParser
 
 import torch
 import torch.nn as nn
@@ -18,13 +19,9 @@ from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import models
 from dataset import VideoFeatDataset as dset
-
-from tools.glog_tools import get_logger
 from tools.config_tools import Config
 from tools import utils
 
-from optparse import OptionParser
-import pdb
 
 parser = OptionParser()
 parser.add_option('--config',
@@ -35,13 +32,10 @@ parser.add_option('--config',
 (opts, args) = parser.parse_args()
 assert isinstance(opts, object)
 opt = Config(opts.config)
-
-mylog, logfile= get_logger(fileName=opt.log_name)
 print(opt)
-os.popen('cat {0} >> {1}'.format(opts.config, logfile))
 
 if opt.checkpoint_folder is None:
-    opt.checkpoint_folder = 'models_checkpoint'
+    opt.checkpoint_folder = 'checkpoints'
 
 # make dir
 if not os.path.exists(opt.checkpoint_folder):
@@ -49,8 +43,8 @@ if not os.path.exists(opt.checkpoint_folder):
 
 train_dataset = dset(opt.data_dir, flist=opt.flist)
 
-mylog.info('number of train samples is: {0}'.format(len(train_dataset)))
-mylog.info('finished loading data')
+print('number of train samples is: {0}'.format(len(train_dataset)))
+print('finished loading data')
 
 os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
 
@@ -59,11 +53,11 @@ opt.manualSeed = random.randint(1, 10000) # fix seed
 # opt.manualSeed = 123456
 
 if torch.cuda.is_available() and not opt.cuda:
-    mylog.info("WARNING: You have a CUDA device, so you should probably run with --cuda")
+    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 else:
     if ngpu == 1:
-        mylog.info('so we use 1 gpu to training')
-        mylog.info('setting gpu on gpuid {0}'.format(opt.gpu_id))
+        print('so we use 1 gpu to training')
+        print('setting gpu on gpuid {0}'.format(opt.gpu_id))
 
         if opt.cuda:
             torch.cuda.manual_seed(opt.manualSeed)
@@ -71,7 +65,7 @@ else:
 cudnn.benchmark = True
 random.seed(opt.manualSeed)
 torch.manual_seed(opt.manualSeed)
-mylog.info('Random Seed: {0}'.format(opt.manualSeed))
+print('Random Seed: {0}'.format(opt.manualSeed))
 
 
 # training function for metric learning
@@ -87,7 +81,6 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
 
     end = time.time()
     for i, (vfeat, afeat) in enumerate(train_loader):
-        #pdb.set_trace()
         # shuffling the index orders
         bz = vfeat.size()[0]
         orders = np.arange(bz)
@@ -95,7 +88,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         np.random.shuffle(shuffle_orders)
 
         # creating a new data with the shuffled indices
-        afeat2 = afeat[torch.from_numpy(shuffle_orders)].clone()
+        afeat2 = afeat[torch.from_numpy(shuffle_orders).long()].clone()
 
         # concat the vfeat and afeat respectively
         afeat0 = torch.cat((afeat, afeat2), 0)
@@ -126,7 +119,6 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
             afeat_var = afeat_var.cuda()
             target_var = target_var.cuda()
 
-        #pdb.set_trace()
         # forward, backward optimize
         sim = model(vfeat_var, afeat_var)   # inference simialrity
         loss = criterion(sim, target_var)   # compute contrastive loss
@@ -155,7 +147,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         end = time.time()
         if i % opt.print_freq == 0:
             log_str = 'Epoch: [{0}][{1}/{2}]\t Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t Loss {loss.val:.4f} ({loss.avg:.4f})'.format(epoch, i, len(train_loader), batch_time=batch_time, loss=losses)
-            mylog.info(log_str)
+            print(log_str)
 
 
 def main():
@@ -172,14 +164,14 @@ def main():
     model = models.VAMetric()
 
     if not opt.train and opt.init_model != '':
-        mylog.info('loading pretrained model from {0}'.format(opt.init_model))
+        print('loading pretrained model from {0}'.format(opt.init_model))
         model.load_state_dict(torch.load(opt.init_model))
 
     # Contrastive Loss
     criterion = models.ContrastiveLoss()
 
     if opt.cuda:
-        mylog.info('shift model and criterion to GPU .. ')
+        print('shift model and criterion to GPU .. ')
         model = model.cuda()
         criterion = criterion.cuda()
 
