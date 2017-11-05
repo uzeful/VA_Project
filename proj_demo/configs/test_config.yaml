@@ -11,5 +11,3 @@ manualSeed: False
 checkpoint_folder: ./checkpoints
 init_model: './checkpoints/VA_METRIC_DEMO_MODEL.pth'
 topk: 5
-log_dir: logs/
-log_name: 'VA_METRIC_TEST'
