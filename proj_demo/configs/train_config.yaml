@@ -1,4 +1,4 @@
-cuda: True
+cuda: False
 ngpu: 1
 gpu_id: '0'
 data_dir: /data/datasets/yt8m/Train         # replace it as your data path
