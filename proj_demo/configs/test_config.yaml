@@ -1,4 +1,3 @@
-train: False
 cuda: False
 ngpu: 1
 gpu_id: '0'
@@ -8,5 +7,5 @@ audio_flist: './filelists/Audio_Name_List.txt'
 workers: 4
 batchSize: 40
 checkpoint_folder: ./checkpoints
-init_model: './checkpoints/VA_METRIC_DEMO_MODEL.pth'
+init_model: './checkpoints/VA_METRIC_DEMO_MODEL_CPU.pth'
 topk: 5

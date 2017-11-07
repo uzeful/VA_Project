@@ -150,18 +150,14 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
 
 def main():
     global opt
-    best_prec1 = 0
-    # only used when we resume training from some checkpoint model
-    resume_epoch = 0
     # train data loader
-    # for loader, droplast by default is set to false
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=opt.batchSize,
                                      shuffle=True, num_workers=int(opt.workers))
 
     # create model
     model = models.VAMetric2()
 
-    if not opt.train and opt.init_model != '':
+    if opt.init_model != '':
         print('loading pretrained model from {0}'.format(opt.init_model))
         model.load_state_dict(torch.load(opt.init_model))
 
