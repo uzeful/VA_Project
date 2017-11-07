@@ -1,14 +1,14 @@
 train: True
-cuda: True
+cuda: False
 ngpu: 1
 gpu_id: '0'
 data_dir: /data/datasets/yt8m/Train         # replace it as your data path
 flist: './filelists/train_filelist.txt'
 workers: 4
 batchSize: 64
-manualSeed: False
+manualSeed: 
 adam: True
-lr: 0.01
+lr: 0.001
 lr_decay: 0.7
 lr_decay_epoch: 10
 momentum: 0.9

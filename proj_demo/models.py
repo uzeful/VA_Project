@@ -27,8 +27,8 @@ class FeatAggregate(nn.Module):
             h_t2 = h_t2.cuda()
             c_t2 = c_t2.cuda()
 
-        #pdb.set_trace()
         for _, feat_t in enumerate(feats.chunk(feats.size(1), dim=1)):
+            pdb.set_trace()
             h_t, c_t = self.lstm1(feat_t, (h_t, c_t))
             h_t2, c_t2 = self.lstm2(h_t, (h_t2, c_t2))
 
@@ -36,7 +36,7 @@ class FeatAggregate(nn.Module):
         feat = h_t2
         return feat
 
-# Visual-audio multimodal metric learning
+# Visual-audio multimodal metric learning: LSTM*2+FC*2
 class VAMetric(nn.Module):
     def __init__(self):
         super(VAMetric, self).__init__()
@@ -56,6 +56,36 @@ class VAMetric(nn.Module):
         vfeat = self.VFeatPool(vfeat)
         afeat = self.AFeatPool(afeat)
         vfeat = self.fc(vfeat)
+        afeat = self.fc(afeat)
+
+        return F.pairwise_distance(vfeat, afeat)
+
+
+# Visual-audio multimodal metric learning: MaxPool+FC
+class VAMetric2(nn.Module):
+    def __init__(self, framenum=120):
+        super(VAMetric2, self).__init__()
+        self.mp = nn.MaxPool1d(framenum)
+        self.vfc = nn.Linear(1024, 128)
+        self.fc = nn.Linear(128, 96)
+        self.init_params()
+
+    def init_params(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform(m.weight)
+                nn.init.constant(m.bias, 0)
+
+    def forward(self, vfeat, afeat):
+        # aggregate the visual features
+        vfeat = self.mp(vfeat)
+        vfeat = vfeat.view(-1, 1024)
+        vfeat = F.relu(self.vfc(vfeat))
+        vfeat = self.fc(vfeat)
+
+        # aggregate the auditory features
+        afeat = self.mp(afeat)
+        afeat = afeat.view(-1, 128)
         afeat = self.fc(afeat)
 
         return F.pairwise_distance(vfeat, afeat)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from __future__ import division
 import argparse
 import random
 import time
@@ -22,6 +23,7 @@ from dataset import VideoFeatDataset as dset
 from tools.config_tools import Config
 from tools import utils
 
+import pdb
 
 parser = OptionParser()
 parser.add_option('--config',
@@ -47,7 +49,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
 
 ngpu = int(opt.ngpu)
 if torch.cuda.is_available() and not opt.cuda:
-    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
+    print("WARNING: You have a CUDA device, so you should probably run with \"cuda: True\"")
 else:
     if ngpu == 1:
         print('so we use gpu 1 for testing')
@@ -68,6 +70,10 @@ def test(video_loader, audio_loader, model, opt):
     right = 0
     for _, vfeat in enumerate(video_loader):
         for _, afeat in enumerate(audio_loader):
+            # transpose feats
+            vfeat = vfeat.transpose(2,1)
+            afeat = afeat.transpose(2,1)
+
             # shuffling the index orders
             bz = vfeat.size()[0]
             for k in np.arange(bz):
@@ -94,7 +100,7 @@ def test(video_loader, audio_loader, model, opt):
                 if k in order:
                     right = right + 1
             print('The similarity matrix: \n {}'.format(simmat))
-            print('Testing accuracy (top{}): {:.3}'.format(opt.topk, right/bz))
+            print('Testing accuracy (top{}): {:.3f}'.format(opt.topk, right/bz))
 
 def main():
     global opt
@@ -105,7 +111,7 @@ def main():
                                      shuffle=False, num_workers=int(opt.workers))
 
     # create model
-    model = models.VAMetric()
+    model = models.VAMetric2()
 
     if opt.init_model != '':
         print('loading pretrained model from {0}'.format(opt.init_model))

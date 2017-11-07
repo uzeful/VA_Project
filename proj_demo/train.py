@@ -22,6 +22,8 @@ from dataset import VideoFeatDataset as dset
 from tools.config_tools import Config
 from tools import utils
 
+import pdb
+
 
 parser = OptionParser()
 parser.add_option('--config',
@@ -46,25 +48,22 @@ train_dataset = dset(opt.data_dir, flist=opt.flist)
 print('number of train samples is: {0}'.format(len(train_dataset)))
 print('finished loading data')
 
-os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
 
-ngpu = int(opt.ngpu)
-opt.manualSeed = random.randint(1, 10000) # fix seed
-# opt.manualSeed = 123456
+if opt.manualSeed is None:
+    opt.manualSeed = random.randint(1, 10000)
 
 if torch.cuda.is_available() and not opt.cuda:
-    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
+    print("WARNING: You have a CUDA device, so you should probably run with \"cuda: True\"")
+    torch.manual_seed(opt.manualSeed)
 else:
-    if ngpu == 1:
+    if int(opt.ngpu) == 1:
         print('so we use 1 gpu to training')
         print('setting gpu on gpuid {0}'.format(opt.gpu_id))
 
         if opt.cuda:
+            os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
             torch.cuda.manual_seed(opt.manualSeed)
-
-cudnn.benchmark = True
-random.seed(opt.manualSeed)
-torch.manual_seed(opt.manualSeed)
+            cudnn.benchmark = True
 print('Random Seed: {0}'.format(opt.manualSeed))
 
 
@@ -83,7 +82,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
     for i, (vfeat, afeat) in enumerate(train_loader):
         # shuffling the index orders
         bz = vfeat.size()[0]
-        orders = np.arange(bz)
+        orders = np.arange(bz).astype('int32')
         shuffle_orders = orders.copy()
         np.random.shuffle(shuffle_orders)
 
@@ -107,6 +106,10 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         # concat the labels together
         target = torch.cat((target2, target1), 0)
         target = 1 - target
+
+        # transpose the feats
+        vfeat0 = vfeat0.transpose(2, 1)
+        afeat0 = afeat0.transpose(2, 1)
 
         # put the data into Variable
         vfeat_var = Variable(vfeat0)
@@ -161,7 +164,7 @@ def main():
                                      shuffle=True, num_workers=int(opt.workers))
 
     # create model
-    model = models.VAMetric()
+    model = models.VAMetric2()
 
     if not opt.train and opt.init_model != '':
         print('loading pretrained model from {0}'.format(opt.init_model))
