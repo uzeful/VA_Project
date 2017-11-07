@@ -2,28 +2,19 @@
 
 from __future__ import print_function
 from __future__ import division
-import argparse
-import random
-import time
+
 import os
 import numpy as np
 from optparse import OptionParser
 
 import torch
-import torch.nn as nn
-import torch.nn.parallel # for multi-GPU training
 import torch.backends.cudnn as cudnn
-import torch.optim as optim
-import torch.utils.data
 from torch.autograd import Variable
-from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import models
 from dataset import VideoFeatDataset as dset
 from tools.config_tools import Config
 from tools import utils
-
-import pdb
 
 parser = OptionParser()
 parser.add_option('--config',
@@ -45,17 +36,15 @@ test_audio_dataset = dset(opt.data_dir, opt.audio_flist, which_feat='afeat')
 print('number of test samples is: {0}'.format(len(test_video_dataset)))
 print('finished loading data')
 
-os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
 
-ngpu = int(opt.ngpu)
 if torch.cuda.is_available() and not opt.cuda:
     print("WARNING: You have a CUDA device, so you should probably run with \"cuda: True\"")
 else:
-    if ngpu == 1:
+    if int(opt.ngpu) == 1:
         print('so we use gpu 1 for testing')
+        os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
+        cudnn.benchmark = True
         print('setting gpu on gpuid {0}'.format(opt.gpu_id))
-
-cudnn.benchmark = True
 
 # test function for metric learning
 def test(video_loader, audio_loader, model, opt):
@@ -65,7 +54,6 @@ def test(video_loader, audio_loader, model, opt):
     # training mode
     model.eval()
 
-    end = time.time()
     sim_mat = []
     right = 0
     for _, vfeat in enumerate(video_loader):

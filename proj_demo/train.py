@@ -9,11 +9,8 @@ import numpy as np
 from optparse import OptionParser
 
 import torch
-import torch.nn as nn
-import torch.nn.parallel # for multi-GPU training
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
-import torch.utils.data
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
@@ -21,8 +18,6 @@ import models
 from dataset import VideoFeatDataset as dset
 from tools.config_tools import Config
 from tools import utils
-
-import pdb
 
 
 parser = OptionParser()

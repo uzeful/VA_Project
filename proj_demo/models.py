@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import torch.nn.functional as F
-import pdb
 
 
 class FeatAggregate(nn.Module):
@@ -15,7 +14,6 @@ class FeatAggregate(nn.Module):
         self.lstm2 = nn.LSTMCell(hidden_size, out_size)
 
     def forward(self, feats):
-        #pdb.set_trace()
         h_t = Variable(torch.zeros(feats.size(0), self.hidden_size).float(), requires_grad=False)
         c_t = Variable(torch.zeros(feats.size(0), self.hidden_size).float(), requires_grad=False)
         h_t2 = Variable(torch.zeros(feats.size(0), self.out_size).float(), requires_grad=False)
@@ -28,7 +26,6 @@ class FeatAggregate(nn.Module):
             c_t2 = c_t2.cuda()
 
         for _, feat_t in enumerate(feats.chunk(feats.size(1), dim=1)):
-            pdb.set_trace()
             h_t, c_t = self.lstm1(feat_t, (h_t, c_t))
             h_t2, c_t2 = self.lstm2(h_t, (h_t2, c_t2))
 
@@ -52,7 +49,6 @@ class VAMetric(nn.Module):
                 nn.init.constant(m.bias, 0)
 
     def forward(self, vfeat, afeat):
-        #pdb.set_trace()
         vfeat = self.VFeatPool(vfeat)
         afeat = self.AFeatPool(afeat)
         vfeat = self.fc(vfeat)
