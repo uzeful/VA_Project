@@ -178,7 +178,7 @@ def main():
     lambda_lr = lambda epoch: opt.lr_decay ** ((epoch + 1) // opt.lr_decay_epoch)   #poly policy
     scheduler = LR_Policy(optimizer, lambda_lr)
 
-    for epoch in range(resume_epoch, opt.max_epochs):
+    for epoch in range(opt.max_epochs):
     	#################################
         # train for one epoch
         #################################
@@ -186,10 +186,8 @@ def main():
         scheduler.step()
 
         ##################################
-        # save checkpoints
+        # save checkpoint every 10 epochs
         ##################################
-
-        # save model every 10 epochs
         if ((epoch+1) % opt.epoch_save) == 0:
             path_checkpoint = '{0}/{1}_state_epoch{2}.pth'.format(opt.checkpoint_folder, opt.prefix, epoch+1)
             utils.save_checkpoint(model.state_dict(), path_checkpoint)
