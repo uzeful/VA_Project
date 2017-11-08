@@ -7,7 +7,7 @@ This is the PyTorch code for the project of the visual-auditory class:
 * [torchvision](https://github.com/pytorch/vision)
 
 ```
-suggest you to install the packages following the official website
+suggest you to install the packages following instructions from the official website
 ```
 
 ## Before training your own model
@@ -34,3 +34,7 @@ python evaluate.py
 ```
 modify model.py to configure your own model, and change the hyper-parameters in the config files (configs/train_config.yaml)
 ```
+
+## Tested Environments
+Ubuntu16.04+python2.7+torch0.2.0/0.3.0+GPU/CPU
+Ubuntu16.04+python3.6+torch0.2.0/0.3.0+GPU/CPU
