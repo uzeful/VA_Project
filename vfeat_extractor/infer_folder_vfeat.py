@@ -67,7 +67,7 @@ if __name__ == '__main__':
             # recude dimensions by PCA
             feat_ = pca.transform(feat_np)
             feats = concat_feat(feats, feat_)
-            embedding = quantize(feats)
+        embedding = quantize(feats)
 
         # write visual features into numpy file
         np.save('{}.npy'.format(os.path.join(subfolder, 'vfeat')), embedding[:cfg.frame_num,])
