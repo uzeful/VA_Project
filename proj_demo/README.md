@@ -36,5 +36,5 @@ modify model.py to configure your own model, and change the hyper-parameters in 
 ```
 
 ## Tested Environments
-Ubuntu16.04+python2.7+torch0.2.0/0.3.0+GPU/CPU
-Ubuntu16.04+python3.6+torch0.2.0/0.3.0+GPU/CPU
+Ubuntu16.04+python2.7+torch0.2.0/0.3.0+GPU/CPU    
+Ubuntu16.04+python3.6+torch0.2.0/0.3.0+GPU/CPU    
