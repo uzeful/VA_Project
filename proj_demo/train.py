@@ -12,7 +12,6 @@ import torch
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 from torch.autograd import Variable
-from torch.optim.lr_scheduler import LambdaLR as LR_Policy
 
 import models
 from dataset import VideoFeatDataset as dset
@@ -58,8 +57,7 @@ else:
         if opt.cuda:
             os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
             torch.cuda.manual_seed(opt.manualSeed)
-            #cudnn.benchmark = True
-            cudnn.enabled = False
+            cudnn.benchmark = True
 print('Random Seed: {0}'.format(opt.manualSeed))
 
 
@@ -144,6 +142,10 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
             log_str = 'Epoch: [{0}][{1}/{2}]\t Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t Loss {loss.val:.4f} ({loss.avg:.4f})'.format(epoch, i, len(train_loader), batch_time=batch_time, loss=losses)
             print(log_str)
 
+# learning rate adjustment function
+def LR_Policy(optimizer, init_lr, policy):
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = init_lr * policy
 
 def main():
     global opt
@@ -179,14 +181,13 @@ def main():
 
     # adjust learning rate every lr_decay_epoch
     lambda_lr = lambda epoch: opt.lr_decay ** ((epoch + 1) // opt.lr_decay_epoch)   #poly policy
-    scheduler = LR_Policy(optimizer, lambda_lr)
 
     for epoch in range(opt.max_epochs):
     	#################################
         # train for one epoch
         #################################
         train(train_loader, model, criterion, optimizer, epoch, opt)
-        scheduler.step()
+        LR_Policy(optimizer, opt.lr, lambda_lr(epoch))      # adjust learning rate through poly policy
 
         ##################################
         # save checkpoints
