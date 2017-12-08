@@ -1,7 +1,9 @@
 cuda: False
 ngpu: 1
 gpu_id: '0'
-data_dir: /data/datasets/yt8m/Train         # replace it as your data path
+model: 'VAMetric'
+init_model: ''
+data_dir: '/data/datasets/yt8m/Train'         # replace it with your data path
 flist: './filelists/train_filelist.txt'
 workers: 4
 batchSize: 64
@@ -15,8 +17,5 @@ weight_decay: 0.0001
 max_epochs: 300
 print_freq: 15
 epoch_save: 10
-checkpoint_folder: ./checkpoints
-prefix: 'VA_METRIC'
-model: ''
+checkpoint_folder: './checkpoints'
 gradient_clip: 0.01
-init_model: ''

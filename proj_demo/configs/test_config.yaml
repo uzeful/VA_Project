@@ -1,11 +1,12 @@
 cuda: False
 ngpu: 1
 gpu_id: '0'
-data_dir: /data/datasets/yt8m/Train     # Your dataset path
+model: 'VAMetric'
+init_model: './checkpoints/VA_METRIC_DEMO_MODEL_CPU.pth'
+data_dir: '/data/datasets/yt8m/Train'     # Your dataset path
 video_flist: './filelists/Video_Name_List.txt'
 audio_flist: './filelists/Audio_Name_List.txt'
 workers: 4
 batchSize: 40
-checkpoint_folder: ./checkpoints
-init_model: './checkpoints/VA_METRIC_DEMO_MODEL_CPU.pth'
+checkpoint_folder: './checkpoints'
 topk: 5

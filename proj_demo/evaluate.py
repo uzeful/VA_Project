@@ -44,7 +44,8 @@ else:
     if int(opt.ngpu) == 1:
         print('so we use gpu 1 for testing')
         os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
-        cudnn.benchmark = True
+        #cudnn.benchmark = True
+        cudnn.enabled = False
         print('setting gpu on gpuid {0}'.format(opt.gpu_id))
 
 # test function for metric learning
@@ -59,10 +60,6 @@ def test(video_loader, audio_loader, model, opt):
     right = 0
     for _, vfeat in enumerate(video_loader):
         for _, afeat in enumerate(audio_loader):
-            # transpose feats
-            vfeat = vfeat.transpose(2,1)
-            afeat = afeat.transpose(2,1)
-
             # shuffling the index orders
             bz = vfeat.size()[0]
             for k in np.arange(bz):
@@ -100,11 +97,19 @@ def main():
                                      shuffle=False, num_workers=int(opt.workers))
 
     # create model
-    model = models.VAMetric2()
+    if opt.model is 'VAMetric':
+        model = models.VAMetric()
+    elif opt.model is 'VAMetric2':
+        model = models.VAMetric2()
+    else:
+        model = models.VAMetric()
+        opt.model = 'VAMetric'
 
     if opt.init_model != '':
         print('loading pretrained model from {0}'.format(opt.init_model))
         model.load_state_dict(torch.load(opt.init_model))
+    else:
+        raise IOError('Please add your pretrained model path to init_model in config file!')
 
     if opt.cuda:
         print('shift model to GPU .. ')
