@@ -61,7 +61,7 @@ def test(video_loader, audio_loader, model, opt):
     sample_num =0   # total sample number
     sim_mat = []    # similarity matrix
 
-    #------------------------------------ import paramters -----------------------------------------------#
+    #------------------------------------ important parameters -----------------------------------------------#
     # bz_sim: the batch similarity between two visual and auditory feature batches
     # slice_sim: the slice similarity between the visual feature batch and the whole auditory feature sets
     # sim_mat: the total simmilarity matrix between the visual and auditory feature datasets
@@ -94,7 +94,8 @@ def test(video_loader, audio_loader, model, opt):
             sim_mat = slice_sim.clone()
         else:
             sim_mat = torch.cat((sim_mat, slice_sim.clone()), 1)
-
+            
+    # if your metric is the feature distance, you should set descending=False, else if your metric is feature similarity, you should set descending=True
     sorted, indices = torch.sort(sim_mat, 0, descending=False)
     np_indices = indices.cpu().data.numpy()
     topk = np_indices[:opt.topk,:]
