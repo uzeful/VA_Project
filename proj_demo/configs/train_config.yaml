@@ -1,4 +1,4 @@
-cuda: False
+cuda: True
 ngpu: 1
 gpu_id: '0'
 model: 'VAMetric'

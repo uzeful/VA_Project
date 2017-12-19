@@ -1,13 +1,33 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+import os
 import argparse
+from optparse import OptionParser
+from tools.config_tools import Config
+
+#----------------------------------- loading paramters -------------------------------------------#
+parser = OptionParser()
+parser.add_option('--config',
+                  type=str,
+                  help="evaluation configuration",
+                  default="./configs/train_config.yaml")
+(opts, args) = parser.parse_args()
+assert isinstance(opts, object)
+opt = Config(opts.config)
+print(opt)
+#--------------------------------------------------------------------------------------------------#
+
+#------------------ environment variable should be set before import torch  -----------------------#
+if opt.cuda:
+    os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
+    os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
+    print('setting gpu on gpuid {0}'.format(opt.gpu_id))
+#--------------------------------------------------------------------------------------------------#
+
 import random
 import time
-import os
 import numpy as np
-from optparse import OptionParser
-
 import torch
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
@@ -15,51 +35,32 @@ from torch.autograd import Variable
 
 import models
 from dataset import VideoFeatDataset as dset
-from tools.config_tools import Config
 from tools import utils
 
 
-parser = OptionParser()
-parser.add_option('--config',
-                  type=str,
-                  help="training configuration",
-                  default="./configs/train_config.yaml")
+if torch.cuda.is_available() and not opt.cuda:
+    print("WARNING: You have a CUDA device, so you should probably run with \"cuda: True\"")
 
-(opts, args) = parser.parse_args()
-assert isinstance(opts, object)
-opt = Config(opts.config)
-print(opt)
+# setting the random seed
+if opt.manualSeed is None:
+    opt.manualSeed = random.randint(1, 10000)
+if opt.cuda and torch.cuda.is_available():
+    cudnn.benchmark = True
+    torch.cuda.manual_seed(opt.manualSeed)
+else:
+    torch.manual_seed(opt.manualSeed)
+print('Random Seed: {0}'.format(opt.manualSeed))
 
+# make checkpoint folder
 if opt.checkpoint_folder is None:
     opt.checkpoint_folder = 'checkpoints'
-
-# make dir
 if not os.path.exists(opt.checkpoint_folder):
     os.system('mkdir {0}'.format(opt.checkpoint_folder))
 
+# loading dataset
 train_dataset = dset(opt.data_dir, flist=opt.flist)
-
 print('number of train samples is: {0}'.format(len(train_dataset)))
 print('finished loading data')
-
-
-if opt.manualSeed is None:
-    opt.manualSeed = random.randint(1, 10000)
-
-if torch.cuda.is_available() and not opt.cuda:
-    print("WARNING: You have a CUDA device, so you should probably run with \"cuda: True\"")
-    torch.manual_seed(opt.manualSeed)
-else:
-    if int(opt.ngpu) == 1:
-        print('so we use 1 gpu to training')
-        print('setting gpu on gpuid {0}'.format(opt.gpu_id))
-
-        if opt.cuda:
-            os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu_id
-            torch.cuda.manual_seed(opt.manualSeed)
-            cudnn.benchmark = True
-print('Random Seed: {0}'.format(opt.manualSeed))
-
 
 # training function for metric learning
 def train(train_loader, model, criterion, optimizer, epoch, opt):

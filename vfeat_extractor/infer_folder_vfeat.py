@@ -60,6 +60,7 @@ if __name__ == '__main__':
 
         # extract features by inception_v3
         feats = None
+        pdb.set_trace()
         for step, frames in enumerate(data_loader):
             #print("extracting feature [{}/{}]".format(step + 1, len(data_loader)))
             feat = model(make_variable(frames))
